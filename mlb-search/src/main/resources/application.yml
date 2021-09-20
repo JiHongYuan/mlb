@@ -1,0 +1,32 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /
+
+
+spring:
+  rabbitmq:
+    host: 192.168.56.102
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 5 # 消费端最小并发数
+        max-concurrency: 10 # 消费端最大并发数
+        prefetch: 5 # 一次请求中预处理的消息数量
+
+  data:
+    # ES配置
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 192.168.56.102:9200
+      repositories:
+        enabled: true
+
+message:
+  rabbitmq:
+    binlog-sync-exchange: binlog-sync-exchange
+    binlog-sync-queue: binlog-sync-queue
+    binlog-sync-routing-key: binlog-sync-routing-key
