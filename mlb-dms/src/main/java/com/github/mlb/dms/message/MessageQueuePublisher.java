@@ -3,7 +3,7 @@ package com.github.mlb.dms.message;
 import com.github.mlb.common.enums.QueueMessageEnum;
 import com.github.mlb.common.model.QueueMessage;
 import com.github.mlb.common.utils.JSON;
-import com.github.mlb.dms.properties.MQProperties;
+import com.github.mlb.dms.config.properties.MQProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 

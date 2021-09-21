@@ -1,9 +1,9 @@
 package com.github.mlb.dms.client;
 
 import com.github.mlb.dms.message.MessageQueuePublisher;
-import com.github.mlb.dms.properties.DataSourceProperties;
-import com.github.mlb.dms.properties.SourcesProperties;
-import com.github.mlb.dms.event.BinlogEventListener;
+import com.github.mlb.dms.config.properties.DataSourceProperties;
+import com.github.mlb.dms.config.properties.SourcesProperties;
+import com.github.mlb.dms.listener.BinlogEventListener;
 import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import lombok.Setter;
 import org.springframework.stereotype.Component;

@@ -17,62 +17,63 @@ import java.text.SimpleDateFormat;
  * @date 2020/7/13 15:48
  */
 public class JSON {
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-	private static final XmlMapper XML_MAPPER = new XmlMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
-	private JSON() {
-	}
+    private JSON() {
+    }
 
-	static {
-		OBJECT_MAPPER
-				.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-				.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
-				.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-	}
+    static {
+        OBJECT_MAPPER
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+                .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    }
 
-	public static String toJSONString(Object object) {
-		try {
-			return OBJECT_MAPPER.writeValueAsString(object);
-		} catch (JsonProcessingException e) {
-			throw new JsonProcessingRunTimeException(e);
-		}
-	}
+    public static String toJSONString(Object object) {
+        try {
+            return OBJECT_MAPPER.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new JsonProcessingRunTimeException(e);
+        }
+    }
 
-	public static <T> T parseObject(String text, Class<T> clazz) {
-		try {
-			return OBJECT_MAPPER.readValue(text, clazz);
-		} catch (JsonProcessingException e) {
-			throw new JsonProcessingRunTimeException(e);
-		}
-	}
+    public static <T> T parseObject(String text, Class<T> clazz) {
+        try {
+            return OBJECT_MAPPER.readValue(text, clazz);
+        } catch (JsonProcessingException e) {
+            throw new JsonProcessingRunTimeException(e);
+        }
+    }
 
-	public static String convertXmlToJson(String xml) {
-		StringWriter w = new StringWriter();
-		try (JsonParser jp = XML_MAPPER.getFactory().createParser(xml);
-			 JsonGenerator jg = OBJECT_MAPPER.getFactory().createGenerator(w);) {
+    public static String convertXmlToJson(String xml) {
+        StringWriter w = new StringWriter();
+        try (JsonParser jp = XML_MAPPER.getFactory().createParser(xml);
+             JsonGenerator jg = OBJECT_MAPPER.getFactory().createGenerator(w);) {
 
-			while (jp.nextToken() != null) {
-				jg.copyCurrentEvent(jp);
-			}
+            while (jp.nextToken() != null) {
+                jg.copyCurrentEvent(jp);
+            }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return w.toString();
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return w.toString();
+    }
 
 
-	public static ObjectMapper builderMapper() {
-		return OBJECT_MAPPER;
-	}
+    public static ObjectMapper builderMapper() {
+        return OBJECT_MAPPER;
+    }
 
-	public static boolean isJSON(String text) {
-		try {
-			toJSONString(text);
-			return true;
-		} catch (JsonProcessingRunTimeException e) {
-			return false;
-		}
-	}
+    public static boolean isJSON(String text) {
+        try {
+            toJSONString(text);
+            return true;
+        } catch (JsonProcessingRunTimeException e) {
+            return false;
+        }
+    }
+
 
 }

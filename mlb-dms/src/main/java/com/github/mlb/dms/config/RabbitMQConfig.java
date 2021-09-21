@@ -1,6 +1,6 @@
 package com.github.mlb.dms.config;
 
-import com.github.mlb.dms.properties.MQProperties;
+import com.github.mlb.dms.config.properties.MQProperties;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.context.annotation.Bean;
