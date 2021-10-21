@@ -14,12 +14,20 @@ import java.util.List;
 public interface RepositoryManager extends ElasticsearchRepository<RepositoryDocument, Long> {
 
     /**
-     * find by
+     * query by
      *
      * @param repositoryName 仓库名称
      * @param desc           简介
      * @return collection
      */
-    List<RepositoryDocument> findByRepositoryNameAndAndDesc(String repositoryName, String desc);
+    List<RepositoryDocument> queryByRepositoryNameAndDesc(String repositoryName, String desc);
+
+    /**
+     * query
+     *
+     * @param repositoryId id
+     * @return doc
+     */
+    RepositoryDocument queryById(Integer repositoryId);
 
 }

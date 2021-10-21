@@ -1,5 +1,6 @@
 package com.github.mlb.content.biz.repository.service;
 
+import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 import com.github.mlb.content.api.repository.params.AddOrModifyRepositoryParam;
 
 /**
@@ -8,19 +9,21 @@ import com.github.mlb.content.api.repository.params.AddOrModifyRepositoryParam;
  */
 public interface RepositoryService {
 
+    RepositoryEntity queryRepositoryById(Integer repositoryId);
+
     /**
      * add repository
      *
      * @param addRepositoryParam addParam
      */
-    boolean addRepository(AddOrModifyRepositoryParam addRepositoryParam);
+    void addRepository(AddOrModifyRepositoryParam addRepositoryParam);
 
     /**
      * modify repository
      *
      * @param modifyRepositoryParam modifyParam
      */
-    boolean modifyRepository(AddOrModifyRepositoryParam modifyRepositoryParam);
+    void modifyRepository(AddOrModifyRepositoryParam modifyRepositoryParam);
 
     void removeRepository();
 }

@@ -17,15 +17,20 @@ public class RepositoryServiceImpl implements RepositoryService {
     private final RepositoryManager repositoryManager;
 
     @Override
-    public boolean addRepository(AddOrModifyRepositoryParam addRepositoryParam) {
-        RepositoryEntity repository = convertToRepository(addRepositoryParam);
-        return repositoryManager.save(repository);
+    public RepositoryEntity queryRepositoryById(Integer repositoryId) {
+        return repositoryManager.queryRepositoryById(repositoryId);
     }
 
     @Override
-    public boolean modifyRepository(AddOrModifyRepositoryParam modifyRepositoryParam) {
+    public void addRepository(AddOrModifyRepositoryParam addRepositoryParam) {
+        RepositoryEntity repository = convertToRepository(addRepositoryParam);
+        repositoryManager.save(repository);
+    }
+
+    @Override
+    public void modifyRepository(AddOrModifyRepositoryParam modifyRepositoryParam) {
         RepositoryEntity repository = convertToRepository(modifyRepositoryParam);
-        return repositoryManager.updateById(repository);
+        repositoryManager.updateById(repository);
     }
 
     @Override

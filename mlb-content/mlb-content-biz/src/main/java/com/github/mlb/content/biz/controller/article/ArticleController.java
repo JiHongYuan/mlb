@@ -3,9 +3,15 @@ package com.github.mlb.content.biz.controller.article;
 import com.github.mlb.content.api.article.entity.ArticleEntity;
 import com.github.mlb.content.api.article.request.ArticleRequest;
 import com.github.mlb.content.biz.article.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author JiHongYuan
@@ -15,11 +21,23 @@ import java.util.List;
 @RequestMapping("/content/article")
 public class ArticleController {
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     private final ArticleService articleService;
 
     @GetMapping
     public List<ArticleEntity> get() {
-        return articleService.list();
+        String dateKey = DateFormatUtils.format(new Date(), "yyyyMMdd");
+        Long increment = redisTemplate.opsForValue().increment(dateKey, 1);
+        if (increment == 1) {
+
+            redisTemplate.expire(dateKey, 86400, TimeUnit.SECONDS);
+        }
+        String value = StringUtils.leftPad(String.valueOf(increment), 5, "0");
+        System.out.println(dateKey + value);
+        return null;
+//        return articleService.list();
     }
 
     @GetMapping("/{articleId}")

@@ -3,6 +3,7 @@ package com.github.mlb.content.api.repository.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @TableName("b_content_repository")
 public class RepositoryEntity {
 

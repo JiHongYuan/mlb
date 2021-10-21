@@ -18,6 +18,11 @@ public class RepositoryController {
 
     private final RepositoryService repositoryService;
 
+    @GetMapping("/{id}")
+    public Result<Object> getOne(@PathVariable("id") Integer id) {
+        return Result.ofSuccess(repositoryService.queryRepositoryById(id));
+    }
+
     @PostMapping
     public Result<Object> add(@Validated(value = {AddOperate.class}) @RequestBody AddOrModifyRepositoryParam addRepositoryParam) {
         repositoryService.addRepository(addRepositoryParam);
@@ -29,7 +34,6 @@ public class RepositoryController {
         repositoryService.modifyRepository(modifyRepositoryParam);
         return Result.ofSuccess(null);
     }
-
 
     public RepositoryController(RepositoryService repositoryService) {
         this.repositoryService = repositoryService;
