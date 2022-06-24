@@ -3,52 +3,60 @@ package com.github.mlb.content.api.category.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.mlb.common.model.BaseEntity;
+import com.github.mlb.content.api.category.enums.CategoryType;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author JiHongYuan
  * @date 2021/9/18 10:24
  */
+@Getter
+@Setter
 @TableName("b_content_category")
-public class CategoryEntity {
+public class CategoryEntity extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
-    private Integer userId;
+    private Long userId;
 
-    private Integer repositoryId;
+    private Long repositoryId;
 
-    private String categoryName;
+    /**
+     * 路径名称
+     */
+    private String slug;
 
-    public Integer getId() {
-        return id;
-    }
+    /**
+     * 分类标题
+     */
+    private String title;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    /**
+     * 类型(1:title;2:doc)
+     */
+    private CategoryType type;
 
-    public Integer getUserId() {
-        return userId;
-    }
+    /**
+     * 层级
+     */
+    private Integer level;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+    /**
+     * 前驱节点
+     */
+    private Long prevId;
 
-    public Integer getRepositoryId() {
-        return repositoryId;
-    }
+    /**
+     * 后驱节点
+     */
+    private Long nextId;
 
-    public void setRepositoryId(Integer repositoryId) {
-        this.repositoryId = repositoryId;
-    }
+    /**
+     * 父亲节点
+     */
+    private Long parentId;
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
 }

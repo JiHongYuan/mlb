@@ -6,12 +6,24 @@ package com.github.mlb.common.utils;
  */
 public class Result<R> {
 
+    /**
+     * 成功 或 失败
+     */
     private boolean success;
 
+    /**
+     * 响应码
+     */
     private int code;
 
+    /**
+     * 消息
+     */
     private String msg;
 
+    /**
+     * 返回数据
+     */
     private R data;
 
     public static <R> Result<R> ofSuccess(R data) {

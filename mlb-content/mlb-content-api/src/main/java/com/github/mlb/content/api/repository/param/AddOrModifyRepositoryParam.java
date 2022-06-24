@@ -1,10 +1,9 @@
-package com.github.mlb.content.api.repository.params;
+package com.github.mlb.content.api.repository.param;
 
 import com.github.mlb.common.utils.AddOperate;
 import com.github.mlb.common.utils.ModifyOperate;
 import lombok.Getter;
 import lombok.Setter;
-import org.dozer.Mapping;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -18,30 +17,43 @@ import javax.validation.constraints.Null;
 @Setter
 public class AddOrModifyRepositoryParam {
 
-    @Mapping("id")
     @Null(groups = {AddOperate.class})
     @NotNull(groups = {ModifyOperate.class})
-    private Integer repositoryId;
+    private Long id;
+
+    /**
+     * 路径名称
+     */
+    @Null(groups = {AddOperate.class})
+    private String slug;
 
     /**
      * 仓库名称
      */
-    @NotEmpty
-    private String repositoryName;
+    @NotEmpty(message = "仓库名称不能为空")
+    private String name;
 
     /**
-     * 简介
+     * 仓库描述
      */
-    private String desc;
+    @NotEmpty(message = "仓库描述不能为空")
+    private String describe;
 
     /**
-     * 简介图片
+     * 图标
      */
-    private String descImgPath;
+    @NotEmpty(message = "图标不能为空")
+    private String icon;
+
+    /**
+     * 封面
+     */
+    private String cover;
 
     /**
      * 是否公开
      */
+    @NotNull(message = "是否公开标识不能为空")
     private Boolean isPublic;
 
 }

@@ -23,11 +23,10 @@ import java.util.Map;
 public class EventHandlerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventHandlerAdapter.class);
 
-    private final List<EventHandler> eventHandlerList;
+    private final List<EventHandler> eventHandlerList = new ArrayList<>();
     private final Map<Long, TableMapEventData> tableEventDataMapCache = new HashMap<>(16);
 
     public EventHandlerAdapter() {
-        eventHandlerList = new ArrayList<>();
         eventHandlerList.add(new WriteEventHandler());
         eventHandlerList.add(new UpdateEventHandler());
         eventHandlerList.add(new DeleteEventHandler());
@@ -39,19 +38,20 @@ public class EventHandlerAdapter {
             return null;
         }
 
+        // 缓存tableId 对应 tableData
         if (eventData instanceof TableMapEventData) {
             TableMapEventData mapEventData = (TableMapEventData) eventData;
             tableEventDataMapCache.put(mapEventData.getTableId(), mapEventData);
         }
 
-        EventHandler handler = getHandler(eventData);
-        if (handler == null) {
-            LOGGER.info("can not find {} match handler", eventData.getClass());
-            return null;
+        // 获取具体类型handler
+        EventHandler eventHandler = getHandler(eventData);
+        if (eventHandler == null) {
+            throw new RuntimeException("can not find " + eventData.getClass() + " match handler");
         }
 
-        RowsData rowsData = handler.handler(eventData);
-        String action = handler.eventAction();
+        RowsData rowsData = eventHandler.handler(eventData);
+        String action = eventHandler.eventAction();
 
         TableMapEventData tableMapEventData = tableEventDataMapCache.get(rowsData.getTableId());
         BinlogDTO binlogDTO = new BinlogDTO();

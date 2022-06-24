@@ -25,13 +25,14 @@ public class MessageQueuePublisher {
 
     private void publish(QueueMessageEnum type, String message) {
         switch (type) {
+            // binlog同步
             case BINLOG_SYNC:
                 this.publish(mqProperties.getBinlogSyncExchange(), mqProperties.getBinlogSyncRoutingKey(), message);
                 break;
             default:
                 break;
         }
-}
+    }
 
     private void publish(String exchange, String routingKey, String message) {
         rabbitTemplate.convertAndSend(exchange, routingKey, message);

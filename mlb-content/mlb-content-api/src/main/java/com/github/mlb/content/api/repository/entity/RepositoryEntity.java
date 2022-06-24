@@ -1,11 +1,11 @@
 package com.github.mlb.content.api.repository.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.github.mlb.common.model.BaseEntity;
+import lombok.*;
 
 /**
  * @author JiHongYuan
@@ -15,20 +15,48 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("b_content_repository")
-public class RepositoryEntity {
+public class RepositoryEntity extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
-    private Integer userId;
+    /**
+     * 用户ID
+     */
+    private Long userId;
 
-    private String repositoryName;
+    /**
+     * 作为仓库url的末尾部分
+     */
+    private String slug;
 
-    private String desc;
+    /**
+     * 仓库名称
+     */
+    private String name;
 
-    private String descImgPath;
+    /**
+     * 仓库描述
+     */
+    @TableField("`describe`")
+    private String describe;
 
+    /**
+     * 图标
+     */
+    private String icon;
+
+    /**
+     * 封面
+     * */
+    private String cover;
+
+    /**
+     * 是否公开
+     */
     private Boolean isPublic;
 
 }

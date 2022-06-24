@@ -20,7 +20,6 @@
     <properties>
         <java.version>11</java.version>
         <lombok.version>1.18.20</lombok.version>
-        <dozer.version>5.5.1</dozer.version>
     </properties>
 
     <dependencies>
@@ -32,15 +31,16 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>${dozer.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.18.3</version>
+        </dependency>
+
     </dependencies>
+
 </project>

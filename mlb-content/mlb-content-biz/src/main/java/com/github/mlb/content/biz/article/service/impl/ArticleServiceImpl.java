@@ -41,17 +41,17 @@ public class ArticleServiceImpl extends
     public void update(ArticleRequest articleRequest) {
         ArticleEntity lastArticle = getById(articleRequest.getArticleId());
 
-        Date updateTime = lastArticle.getUpdateTime();
-
-        ArticleVersionEntity articleVersion = new ArticleVersionEntity();
-        articleVersion.setArticleId(lastArticle.getId());
-        articleVersion.setContent(articleRequest.getContent());
-        articleVersion.setVersion(lastArticle.getNewVersion());
-        boolean isAdd = articleVersionService.addOrUpdateByNewVersionOnUpdateTime(articleVersion, updateTime);
-        if (isAdd) {
-            lastArticle.setNewVersion(lastArticle.getNewVersion() + 1);
-            super.updateById(lastArticle);
-        }
+//        Date updateTime = lastArticle.getUpdateTime();
+//
+//        ArticleVersionEntity articleVersion = new ArticleVersionEntity();
+//        articleVersion.setArticleId(lastArticle.getId());
+//        articleVersion.setContent(articleRequest.getContent());
+//        articleVersion.setVersion(lastArticle.getNewVersion());
+//        boolean isAdd = articleVersionService.addOrUpdateByNewVersionOnUpdateTime(articleVersion, updateTime);
+//        if (isAdd) {
+//            lastArticle.setNewVersion(lastArticle.getNewVersion() + 1);
+//            super.updateById(lastArticle);
+//        }
     }
 
     public ArticleServiceImpl(ArticleVersionService articleVersionService) {

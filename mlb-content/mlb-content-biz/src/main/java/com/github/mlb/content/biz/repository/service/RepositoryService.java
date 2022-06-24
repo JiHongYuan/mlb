@@ -1,7 +1,10 @@
 package com.github.mlb.content.biz.repository.service;
 
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
-import com.github.mlb.content.api.repository.params.AddOrModifyRepositoryParam;
+import com.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
+import com.github.mlb.content.api.repository.param.QueryRepositoryParam;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -9,21 +12,43 @@ import com.github.mlb.content.api.repository.params.AddOrModifyRepositoryParam;
  */
 public interface RepositoryService {
 
-    RepositoryEntity queryRepositoryById(Integer repositoryId);
+    /**
+     * get repository by {@code repositoryId}
+     *
+     * @param repositoryId 仓库ID
+     * @return entity
+     */
+    RepositoryEntity getByRepositoryId(Long repositoryId);
+
+    /**
+     * 查询分页
+     *
+     * @param param 入参
+     * @return list
+     */
+    List<RepositoryEntity> listByParam(QueryRepositoryParam param);
 
     /**
      * add repository
      *
-     * @param addRepositoryParam addParam
+     * @param param param
+     * @return entity
      */
-    void addRepository(AddOrModifyRepositoryParam addRepositoryParam);
+    RepositoryEntity add(AddOrModifyRepositoryParam param);
 
     /**
-     * modify repository
+     * modify repository {@code param} by repositoryId
      *
-     * @param modifyRepositoryParam modifyParam
+     * @param param param
+     * @return entity
      */
-    void modifyRepository(AddOrModifyRepositoryParam modifyRepositoryParam);
+    RepositoryEntity updateById(AddOrModifyRepositoryParam param);
 
-    void removeRepository();
+    /**
+     * remove repository by {@code slug}
+     *
+     * @param repositoryId 仓库ID
+     */
+    void removeByRepositoryId(Long repositoryId);
+
 }

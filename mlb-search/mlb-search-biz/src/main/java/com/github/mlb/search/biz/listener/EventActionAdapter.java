@@ -30,9 +30,13 @@ public class EventActionAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(EventActionAdapter.class);
 
     /**
-     * cache
+     * 缓存 class中所有字段
      */
     private static final Map<Class<?>, List<String>> CLAZZ_FIELD_CACHE_MAP = new HashMap<>();
+
+    /**
+     * handlers
+     */
     private final List<EventActionHandler> eventHandlerList;
 
     /**
@@ -54,8 +58,7 @@ public class EventActionAdapter {
         IndexEnum indexEnum = IndexEnum.get(binlogDTO.getDatabase() + "." + binlogDTO.getTable());
 
         if (indexEnum == null) {
-            LOGGER.debug("can not find {} index match index class", binlogDTO.getDatabase() + "." + binlogDTO.getTable());
-            return;
+            throw new RuntimeException("can not find " + binlogDTO.getDatabase() + "." + binlogDTO.getTable() + " index match index class");
         }
 
         List<Row> rows = new ArrayList<>();
@@ -65,8 +68,7 @@ public class EventActionAdapter {
 
         EventActionHandler handler = getHandler(eventAction);
         if (handler == null) {
-            LOGGER.info("can not find {} match handler", eventAction);
-            return;
+            throw new RuntimeException("can not find " + eventAction + " match handler");
         }
 
         BulkRequest bulkRequest = handler.handler(indexEnum.getIndex(), rows);
@@ -79,6 +81,12 @@ public class EventActionAdapter {
 
     }
 
+    /**
+     * 将数组 转换成  map clazz field, array[i]
+     *
+     * @param row   table row data
+     * @param clazz convert class
+     */
     private Map<String, Object> convertArrayToMap(Serializable[] row, Class<?> clazz) {
         List<String> fieldNameList = getClassFieldList(clazz);
 
@@ -90,6 +98,10 @@ public class EventActionAdapter {
         return map;
     }
 
+    /**
+     * 根据class获取所有字段
+     * @param clazz class
+     * */
     private List<String> getClassFieldList(Class<?> clazz) {
         if (CLAZZ_FIELD_CACHE_MAP.get(clazz) == null) {
             List<String> fieldNameList = new ArrayList<>();

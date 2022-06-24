@@ -32,10 +32,10 @@ public class BinlogEventListener implements BinaryLogClient.EventListener {
             return;
         }
 
+        // MQ 发布
         QueueMessage queueMessage = new QueueMessage();
         queueMessage.setType(QueueMessageEnum.BINLOG_SYNC);
         queueMessage.setBody(binlogDTO);
-
         messageQueuePublisher.publish(queueMessage);
     }
 
