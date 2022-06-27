@@ -19,7 +19,7 @@ public class AddOrModifyRepositoryParam {
 
     @Null(groups = {AddOperate.class})
     @NotNull(groups = {ModifyOperate.class})
-    private Long id;
+    private Long repositoryId;
 
     /**
      * 路径名称

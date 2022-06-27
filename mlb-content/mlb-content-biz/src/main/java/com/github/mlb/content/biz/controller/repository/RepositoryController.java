@@ -1,5 +1,7 @@
 package com.github.mlb.content.biz.controller.repository;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.mlb.common.model.PageInfo;
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 import com.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
 import com.github.mlb.content.api.repository.param.QueryRepositoryParam;
@@ -10,8 +12,6 @@ import com.github.mlb.common.utils.Result;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -30,8 +30,10 @@ public class RepositoryController {
     }
 
     @GetMapping
-    public Result<List<RepositoryEntity>> list(@RequestParam QueryRepositoryParam param) {
-        return Result.ofSuccess(repositoryService.listByParam(param));
+    public Result<Page<RepositoryEntity>> list(QueryRepositoryParam param,
+                                               @RequestParam(defaultValue = "1") Integer index,
+                                               @RequestParam(defaultValue = "10") Integer size) {
+        return Result.ofSuccess(repositoryService.pageByParam(new Page<>(index, size), param));
     }
 
     @PostMapping

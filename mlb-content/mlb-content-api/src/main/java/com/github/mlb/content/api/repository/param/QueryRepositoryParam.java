@@ -10,10 +10,4 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QueryRepositoryParam {
-
-    private Integer limit;
-    private Integer offset;
-
-    private String q;
-
 }

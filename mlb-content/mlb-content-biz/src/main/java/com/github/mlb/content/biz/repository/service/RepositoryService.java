@@ -1,10 +1,10 @@
 package com.github.mlb.content.biz.repository.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 import com.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
 import com.github.mlb.content.api.repository.param.QueryRepositoryParam;
-
-import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -26,7 +26,7 @@ public interface RepositoryService {
      * @param param 入参
      * @return list
      */
-    List<RepositoryEntity> listByParam(QueryRepositoryParam param);
+    Page<RepositoryEntity> pageByParam(IPage<?> page, QueryRepositoryParam param);
 
     /**
      * add repository

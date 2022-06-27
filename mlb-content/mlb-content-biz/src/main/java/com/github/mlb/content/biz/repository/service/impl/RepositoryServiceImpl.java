@@ -1,5 +1,7 @@
 package com.github.mlb.content.biz.repository.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.mlb.common.utils.IdUtil;
 import com.github.mlb.content.api.repository.convert.RepositoryConvert;
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,8 +35,8 @@ public class RepositoryServiceImpl implements RepositoryService {
     }
 
     @Override
-    public List<RepositoryEntity> listByParam(QueryRepositoryParam param) {
-        return null;
+    public Page<RepositoryEntity> pageByParam(IPage<?> page, QueryRepositoryParam param) {
+        return repositoryManager.selectPageByParam(page, param);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.github.mlb.content.api.repository.convert;
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 import com.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -19,6 +20,7 @@ public interface RepositoryConvert {
      * @param param request param
      * @return convert
      */
+    @Mapping(target = "id", source = "repositoryId")
     RepositoryEntity toEntity(AddOrModifyRepositoryParam param);
 
 }

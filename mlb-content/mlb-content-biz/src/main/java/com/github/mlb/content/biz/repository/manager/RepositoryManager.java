@@ -1,7 +1,10 @@
 package com.github.mlb.content.biz.repository.manager;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.mlb.content.api.repository.param.QueryRepositoryParam;
 import com.github.mlb.content.biz.api.RepositoryServiceApi;
 import com.github.mlb.content.biz.repository.mapper.RepositoryMapper;
 import com.github.mlb.content.api.repository.entity.RepositoryEntity;
@@ -38,6 +41,10 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
         return repositoryMapper.selectBySlug(slug);
     }
 
+    public Page<RepositoryEntity> selectPageByParam(IPage<?> page, QueryRepositoryParam param){
+       return repositoryMapper.selectPageByParam( page,  param);
+    }
+
     /**
      * 删除 {@code repositoryId}
      *
@@ -70,4 +77,5 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
         super.save(repository);
         return repository;
     }
+
 }
