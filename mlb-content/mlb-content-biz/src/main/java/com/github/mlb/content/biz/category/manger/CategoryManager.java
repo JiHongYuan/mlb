@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.mlb.content.api.category.entity.CategoryEntity;
 import com.github.mlb.content.biz.category.mapper.CategoryMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +15,22 @@ import java.util.List;
  * @date 2021/9/18 10:27
  */
 @Component
+@AllArgsConstructor
 public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity> {
+
+    private final CategoryMapper categoryMapper;
+
+    public List<CategoryEntity> listByRepositoryId(Long repositoryId) {
+        return this.listByIdOrSlug(repositoryId, null);
+    }
+
+    public List<CategoryEntity> listByRepositorySlug(String repositorySlug) {
+        return this.listByIdOrSlug(null, repositorySlug);
+    }
+
+    private List<CategoryEntity> listByIdOrSlug(Long repositoryId, String repositorySlug) {
+        return categoryMapper.selectListByIdOrSlug(repositoryId, repositorySlug);
+    }
 
     /**
      * 查询分类列表 by parentId
@@ -29,7 +46,7 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
     }
 
     /**
-     * 查询最后一个分类 by parentId
+     * 查询最后一个分类nextId为null by parentId
      *
      * @param categoryId 分类ID
      * @return children list
@@ -37,7 +54,7 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
     public CategoryEntity selectLastParentId(Long categoryId) {
         return super.getOne(Wrappers.<CategoryEntity>lambdaQuery()
                 .eq(CategoryEntity::getParentId, categoryId)
-                .orderByDesc(CategoryEntity::getNextId)
+                .orderByAsc(CategoryEntity::getNextId)
                 .last(" limit 1")
         );
     }
@@ -51,8 +68,19 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
      */
     public boolean uniqueSlugByUserIdAndRepositoryId(Long userId, Long repositoryId, String slug) {
         return super.count(Wrappers.<CategoryEntity>lambdaQuery()
-                .eq(CategoryEntity::getSlug, slug)
                 .eq(CategoryEntity::getRepositoryId, repositoryId)
                 .eq(CategoryEntity::getUserId, userId)) == 1;
     }
+
+    public CategoryEntity add(CategoryEntity category) {
+        category.setCreateAt(new Date());
+        category.setCreateBy(1L);
+        category.setUpdateAt(new Date());
+        category.setUpdateBy(1L);
+        category.setIsDeleted(false);
+        super.save(category);
+        return category;
+    }
+
+
 }

@@ -2,7 +2,10 @@ package com.github.mlb.content.biz.category.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.mlb.content.api.category.entity.CategoryEntity;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -10,4 +13,14 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CategoryMapper extends BaseMapper<CategoryEntity> {
+
+    /**
+     * 查询列表
+     *
+     * @param repositoryId   仓库ID
+     * @param repositorySlug 仓库路径
+     * @return list
+     */
+    List<CategoryEntity> selectListByIdOrSlug(@Param("repositoryId") Long repositoryId, @Param("repositorySlug") String repositorySlug);
+
 }

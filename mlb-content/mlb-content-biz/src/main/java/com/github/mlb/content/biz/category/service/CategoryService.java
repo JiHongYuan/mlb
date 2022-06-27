@@ -1,7 +1,9 @@
 package com.github.mlb.content.biz.category.service;
 
+import com.github.mlb.content.api.category.entity.CategoryEntity;
 import com.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
-import com.github.mlb.content.api.repository.entity.RepositoryEntity;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -10,25 +12,43 @@ import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 public interface CategoryService {
 
     /**
-     * get category by {@code categoryId}
+     * list category by {@code repositoryId}
      *
-     * @param categoryId 分类ID
-     * @return RepositoryEntity
+     * @param repositoryId 仓库ID
+     * @return list
      */
-    RepositoryEntity getById(Long categoryId);
+    List<CategoryEntity> listByRepositoryId(Long repositoryId);
+
+    /**
+     * list category by {@code repositorySlug}
+     *
+     * @param repositorySlug 仓库路径
+     * @return list
+     */
+    List<CategoryEntity> listByRepositorySlug(String repositorySlug);
 
     /**
      * add category
      *
      * @param param param
+     * @return do
      */
-    void add(AddOrModifyCategoryParam param);
+    CategoryEntity add(AddOrModifyCategoryParam param);
 
     /**
      * modify category {@code param} categoryId
      *
      * @param param param
+     * @return do
      */
-    void updateById(AddOrModifyCategoryParam param);
+    CategoryEntity updateById(AddOrModifyCategoryParam param);
+
+
+    /**
+     * remove by {@code categoryId}
+     *
+     * @param categoryId 分类ID
+     */
+    void removeByCategoryId(Long categoryId);
 
 }

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.mlb.common.model.BaseEntity;
 import com.github.mlb.content.api.category.enums.CategoryType;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author JiHongYuan
@@ -14,20 +13,24 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("b_content_category")
 public class CategoryEntity extends BaseEntity {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    private Long repositoryId;
-
     /**
-     * 路径名称
+     * 仓库ID
      */
-    private String slug;
+    private Long repositoryId;
 
     /**
      * 分类标题
@@ -35,7 +38,7 @@ public class CategoryEntity extends BaseEntity {
     private String title;
 
     /**
-     * 类型(1:title;2:doc)
+     * 类型(1:title;)
      */
     private CategoryType type;
 

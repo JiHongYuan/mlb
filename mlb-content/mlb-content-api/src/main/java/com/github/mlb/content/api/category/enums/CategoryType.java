@@ -1,7 +1,6 @@
 package com.github.mlb.content.api.category.enums;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * @author JiHongYuan
@@ -11,14 +10,9 @@ import lombok.Getter;
 public enum CategoryType {
 
     /**
-     * 分组
+     * 标题
      */
     TITLE,
-
-    /**
-     * 文档
-     */
-    DOC,
     ;
 
 }

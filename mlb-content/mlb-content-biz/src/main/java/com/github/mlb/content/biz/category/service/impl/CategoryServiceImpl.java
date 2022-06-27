@@ -1,15 +1,14 @@
 package com.github.mlb.content.biz.category.service.impl;
 
-import com.github.mlb.common.utils.IdUtil;
 import com.github.mlb.content.api.category.convert.CategoryConvert;
 import com.github.mlb.content.api.category.entity.CategoryEntity;
 import com.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
-import com.github.mlb.content.api.repository.entity.RepositoryEntity;
 import com.github.mlb.content.biz.category.manger.CategoryManager;
 import com.github.mlb.content.biz.category.service.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -17,47 +16,57 @@ import org.springframework.util.Assert;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
+    public static final Long userId = 1L;
+
     private final CategoryManager categoryManager;
 
     public CategoryServiceImpl(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 
+    @Override
+    public List<CategoryEntity> listByRepositoryId(Long repositoryId) {
+        return categoryManager.listByRepositoryId(repositoryId);
+    }
 
     @Override
-    public RepositoryEntity getById(Long categoryId) {
-        return null;
+    public List<CategoryEntity> listByRepositorySlug(String repositorySlug) {
+        return categoryManager.listByRepositorySlug(repositorySlug);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void add(AddOrModifyCategoryParam param) {
+    public CategoryEntity add(AddOrModifyCategoryParam param) {
         CategoryEntity category = CategoryConvert.INSTANCE.toEntity(param);
 
-        // TODO 获取登陆用户ID
-        category.setUserId(1L);
+        category.setUserId(userId);
 
-        CategoryEntity lastCategory = categoryManager.selectLastParentId(category.getParentId());
-
-        String slug = IdUtil.generateSlug();
-        category.setSlug(slug);
         /* 当前设置前驱节点 */
-        category.setPrevId(lastCategory.getId());
-        categoryManager.save(category);
+        CategoryEntity lastCategory = categoryManager.selectLastParentId(category.getParentId());
+        category.setPrevId(lastCategory == null ? 0L : lastCategory.getId());
+        categoryManager.add(category);
 
         /* 修改后驱节点 */
-        lastCategory.setNextId(category.getId());
-        categoryManager.updateById(lastCategory);
+        if (lastCategory != null) {
+            lastCategory.setNextId(category.getId());
+            categoryManager.updateById(lastCategory);
+        }
+
+        return category;
     }
 
     @Override
-    public void updateById(AddOrModifyCategoryParam param) {
+    public CategoryEntity updateById(AddOrModifyCategoryParam param) {
         CategoryEntity category = CategoryConvert.INSTANCE.toEntity(param);
 
-        // 验证slug唯一
-        String slug = category.getSlug();
-        Assert.isTrue(categoryManager.uniqueSlugByUserIdAndRepositoryId(1L, category.getRepositoryId(), slug), "路径名称不能重复!");
-
-        categoryManager.updateById(category);
+        categoryManager.updateById(CategoryEntity.builder().id(category.getId()).title(category.getTitle()).build());
+        return category;
     }
+
+    @Override
+    public void removeByCategoryId(Long categoryId) {
+        // TODO delete
+    }
+
 }
