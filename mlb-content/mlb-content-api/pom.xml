@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.mlb</groupId>
+        <groupId>org.github.mlb</groupId>
         <artifactId>mlb-content</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -24,8 +24,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.github.mlb</groupId>
-            <artifactId>common</artifactId>
+            <groupId>org.github.mlb</groupId>
+            <artifactId>mlb-common</artifactId>
             <version>${mlb-common.version}</version>
         </dependency>
 
