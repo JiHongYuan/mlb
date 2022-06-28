@@ -5,6 +5,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * TODO
+ *
  * @author JiHongYuan
  * @date 2022/1/21 11:13
  */
@@ -38,12 +40,12 @@ public class UserInfo {
 
     /**
      * 状态(TODO)
-     * */
+     */
     private Integer status;
 
     /**
      * 创建时间
      */
-    private Date createAt;
+    private Date currentAt;
 
 }
