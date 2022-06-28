@@ -1,7 +1,6 @@
 package com.github.mlb.content.api.article.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.mlb.common.model.BaseEntity;
@@ -20,13 +19,10 @@ public class ArticleVersionEntity extends BaseEntity {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    @TableField
     private String articleId;
 
-    @TableField
     private String content;
 
-    @TableField
     private Integer version;
 
 }

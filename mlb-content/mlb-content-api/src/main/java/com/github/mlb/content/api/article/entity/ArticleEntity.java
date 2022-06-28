@@ -3,6 +3,7 @@ package com.github.mlb.content.api.article.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.mlb.common.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +14,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("b_content_article")
-public class ArticleEntity {
+public class ArticleEntity extends BaseEntity {
 
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
-    private Integer userId;
+    private Long userId;
 
-    private Integer repositoryId;
+    private Long repositoryId;
 
-    private Integer categoryId;
+    private Long categoryId;
 
     private Integer newVersion;
 

@@ -11,8 +11,7 @@ import lombok.*;
  * @author JiHongYuan
  * @date 2021/9/18 10:24
  */
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

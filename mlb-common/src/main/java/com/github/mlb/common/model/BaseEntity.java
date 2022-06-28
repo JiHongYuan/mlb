@@ -29,6 +29,6 @@ public class BaseEntity implements Serializable {
 
     /** 是否删除 */
     @JsonIgnore
-    private transient Boolean isDeleted;
+    private Boolean isDeleted;
 
 }

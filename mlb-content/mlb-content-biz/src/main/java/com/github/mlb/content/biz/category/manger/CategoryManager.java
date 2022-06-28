@@ -20,6 +20,13 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
 
     private final CategoryMapper categoryMapper;
 
+    public CategoryEntity getById(Long categoryId) {
+        return super.getOne(Wrappers.<CategoryEntity>lambdaQuery()
+                .eq(CategoryEntity::getId, categoryId)
+                .eq(CategoryEntity::getIsDeleted, false)
+        );
+    }
+
     public List<CategoryEntity> listByRepositoryId(Long repositoryId) {
         return this.listByIdOrSlug(repositoryId, null);
     }
@@ -57,19 +64,6 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
                 .orderByAsc(CategoryEntity::getNextId)
                 .last(" limit 1")
         );
-    }
-
-    /**
-     * 验证 {@code slug} 唯一
-     *
-     * @param slug   路径名称
-     * @param userId 用户ID
-     * @return unique true
-     */
-    public boolean uniqueSlugByUserIdAndRepositoryId(Long userId, Long repositoryId, String slug) {
-        return super.count(Wrappers.<CategoryEntity>lambdaQuery()
-                .eq(CategoryEntity::getRepositoryId, repositoryId)
-                .eq(CategoryEntity::getUserId, userId)) == 1;
     }
 
     public CategoryEntity add(CategoryEntity category) {
