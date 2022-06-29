@@ -8,11 +8,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author jihongyuan
  */
 @SpringBootApplication
-@EnableFeignClients(basePackages = {"com.github.mlb.content.biz.api"})
+@EnableFeignClients(basePackages = {"org.github.mlb.content.biz.api"})
 public class MlbContentApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MlbContentApplication.class, args);
     }
+
 
 }
