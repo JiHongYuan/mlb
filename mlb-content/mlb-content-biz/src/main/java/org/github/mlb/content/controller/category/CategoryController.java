@@ -1,4 +1,4 @@
-package org.github.mlb.content.biz.controller.category;
+package org.github.mlb.content.controller.category;
 
 import org.github.mlb.common.utils.AddOperate;
 import org.github.mlb.common.utils.ModifyOperate;

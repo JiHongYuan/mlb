@@ -1,6 +1,7 @@
 package org.github.mlb.content.biz.article.manager;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.github.mlb.common.utils.UserInfoHolder;
 import org.github.mlb.content.api.article.entity.ArticleEntity;
 import org.github.mlb.content.biz.article.mapper.ArticleMapper;
 import org.github.mlb.content.biz.article.service.ArticleVersionService;
@@ -21,10 +22,12 @@ public class ArticleManager extends ServiceImpl<ArticleMapper, ArticleEntity> {
     private final ArticleVersionService articleVersionService;
 
     public ArticleEntity add(ArticleEntity article) {
+        Long userId = UserInfoHolder.getId();
+
         article.setCreateAt(new Date());
-        article.setCreateBy(1L);
+        article.setCreateBy(userId);
         article.setUpdateAt(new Date());
-        article.setUpdateBy(1L);
+        article.setUpdateBy(userId);
         article.setIsDeleted(false);
         super.save(article);
         return article;

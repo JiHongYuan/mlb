@@ -2,6 +2,7 @@ package org.github.mlb.content.biz.category.manger;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.github.mlb.common.utils.UserInfoHolder;
 import org.github.mlb.content.api.category.entity.CategoryEntity;
 import org.github.mlb.content.biz.category.mapper.CategoryMapper;
 import lombok.AllArgsConstructor;
@@ -67,10 +68,12 @@ public class CategoryManager extends ServiceImpl<CategoryMapper, CategoryEntity>
     }
 
     public CategoryEntity add(CategoryEntity category) {
+        Long userId = UserInfoHolder.getId();
+
         category.setCreateAt(new Date());
-        category.setCreateBy(1L);
+        category.setCreateBy(userId);
         category.setUpdateAt(new Date());
-        category.setUpdateBy(1L);
+        category.setUpdateBy(userId);
         category.setIsDeleted(false);
         super.save(category);
         return category;

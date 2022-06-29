@@ -1,4 +1,4 @@
-package org.github.mlb.content.biz.controller.repository;
+package org.github.mlb.content.controller.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.github.mlb.content.api.repository.entity.RepositoryEntity;

@@ -1,4 +1,4 @@
-package org.github.mlb.content.biz.controller.article;
+package org.github.mlb.content.controller.article;
 
 import org.github.mlb.common.utils.Result;
 import org.github.mlb.content.api.article.entity.ArticleEntity;

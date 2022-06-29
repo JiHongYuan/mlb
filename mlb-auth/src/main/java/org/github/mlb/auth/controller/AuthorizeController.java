@@ -59,9 +59,9 @@ public class AuthorizeController {
         String token = jwtProvider.generateToken().substring(7);
         String msg = redissonClient.<String>getBucket("auth:" + userEntity.getId()).getAndSet(token, jwtProvider.getProperties().getExpirationSecond(), TimeUnit.SECONDS);
         if (msg != null) {
-            redissonClient.getBucket("userInfo:" + msg).delete();
+            redissonClient.getBucket("auth:userInfo:" + msg).delete();
         }
-        redissonClient.getBucket("userInfo:" + token).set(userInfo, jwtProvider.getProperties().getExpirationSecond(), TimeUnit.SECONDS);
+        redissonClient.getBucket("auth:userInfo:" + token).set(userInfo, jwtProvider.getProperties().getExpirationSecond(), TimeUnit.SECONDS);
         return Result.ofSuccess(token);
     }
 

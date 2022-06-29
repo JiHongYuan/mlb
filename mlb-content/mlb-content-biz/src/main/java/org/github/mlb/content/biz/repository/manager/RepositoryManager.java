@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.github.mlb.common.utils.UserInfoHolder;
 import org.github.mlb.content.api.repository.param.QueryRepositoryParam;
 import org.github.mlb.content.biz.api.RepositoryServiceApi;
 import org.github.mlb.content.biz.repository.mapper.RepositoryMapper;
@@ -69,10 +70,12 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
     }
 
     public RepositoryEntity add(RepositoryEntity repository) {
+        Long userId = UserInfoHolder.getId();
+
         repository.setCreateAt(new Date());
-        repository.setCreateBy(1L);
+        repository.setCreateBy(userId);
         repository.setUpdateAt(new Date());
-        repository.setUpdateBy(1L);
+        repository.setUpdateBy(userId);
         repository.setIsDeleted(false);
         super.save(repository);
         return repository;

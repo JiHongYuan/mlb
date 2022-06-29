@@ -3,6 +3,7 @@ package org.github.mlb.content.biz.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.github.mlb.common.utils.IdUtil;
+import org.github.mlb.common.utils.UserInfoHolder;
 import org.github.mlb.content.api.repository.convert.RepositoryConvert;
 import org.github.mlb.content.api.repository.entity.RepositoryEntity;
 import org.github.mlb.content.api.repository.param.QueryRepositoryParam;
@@ -24,8 +25,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RepositoryServiceImpl implements RepositoryService {
 
-    public static final Long userId = 1L;
-
     private final RepositoryManager repositoryManager;
 
     @Override
@@ -43,7 +42,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     public RepositoryEntity add(AddOrModifyRepositoryParam addRepositoryParam) {
         RepositoryEntity repository = RepositoryConvert.INSTANCE.toEntity(addRepositoryParam);
 
-        repository.setUserId(userId);
+        repository.setUserId(UserInfoHolder.getId());
 
         String slug = IdUtil.generateSlug();
         repository.setSlug(slug);
@@ -59,7 +58,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
         // 验证slug唯一
         String slug = repository.getSlug();
-        Assert.isTrue(!repositoryManager.existSlugByUserId(userId, repository.getId(), slug), "路径名称不能重复!");
+        Assert.isTrue(!repositoryManager.existSlugByUserId(UserInfoHolder.getId(), repository.getId(), slug), "路径名称不能重复!");
 
         repositoryManager.updateById(repository);
         return repository;

@@ -1,5 +1,6 @@
 package org.github.mlb.content.biz.category.service.impl;
 
+import org.github.mlb.common.utils.UserInfoHolder;
 import org.github.mlb.content.api.category.convert.CategoryConvert;
 import org.github.mlb.content.api.category.entity.CategoryEntity;
 import org.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
@@ -16,8 +17,6 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
-
-    public static final Long userId = 1L;
 
     private final CategoryManager categoryManager;
 
@@ -40,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryEntity add(AddOrModifyCategoryParam param) {
         CategoryEntity category = CategoryConvert.INSTANCE.toEntity(param);
 
-        category.setUserId(userId);
+        category.setUserId(UserInfoHolder.getId());
 
         /* 当前设置前驱节点 */
         CategoryEntity lastCategory = categoryManager.selectLastParentId(category.getParentId());
