@@ -1,9 +1,11 @@
 package org.github.mlb.content.biz.category.service.impl;
 
-import org.github.mlb.common.utils.UserInfoHolder;
-import org.github.mlb.content.api.category.convert.CategoryConvert;
-import org.github.mlb.content.api.category.entity.CategoryEntity;
-import org.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
+import lombok.AllArgsConstructor;
+import org.github.mlb.common.utils.UserHolder;
+import org.github.mlb.content.biz.category.mapper.CategoryMapper;
+import org.github.mlb.content.category.convert.CategoryConvert;
+import org.github.mlb.content.category.entity.CategoryEntity;
+import org.github.mlb.content.category.param.AddOrModifyCategoryParam;
 import org.github.mlb.content.biz.category.manger.CategoryManager;
 import org.github.mlb.content.biz.category.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,13 @@ import java.util.List;
  * @author JiHongYuan
  * @date 2022/3/9 15:00
  */
+@AllArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryManager categoryManager;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
 
     @Override
     public List<CategoryEntity> listByRepositoryId(Long repositoryId) {
@@ -35,11 +36,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Long> listIdByUserId(Long userId) {
+        return categoryMapper.selectListIdByUserId(userId);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public CategoryEntity add(AddOrModifyCategoryParam param) {
         CategoryEntity category = CategoryConvert.INSTANCE.toEntity(param);
 
-        category.setUserId(UserInfoHolder.getId());
+        category.setUserId(UserHolder.getId());
 
         /* 当前设置前驱节点 */
         CategoryEntity lastCategory = categoryManager.selectLastParentId(category.getParentId());

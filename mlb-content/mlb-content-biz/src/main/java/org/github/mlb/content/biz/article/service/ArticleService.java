@@ -1,7 +1,9 @@
 package org.github.mlb.content.biz.article.service;
 
-import org.github.mlb.content.api.article.entity.ArticleEntity;
-import org.github.mlb.content.api.article.param.AddArticleParam;
+import org.github.mlb.content.article.entity.ArticleEntity;
+import org.github.mlb.content.article.param.AddArticleParam;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -9,8 +11,11 @@ import org.github.mlb.content.api.article.param.AddArticleParam;
  */
 public interface ArticleService {
 
+    List<Long> listIdByUserId(Long userId);
+
     ArticleEntity add(AddArticleParam param);
 
     void update(AddArticleParam addArticleParam);
+
 
 }

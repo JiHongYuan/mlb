@@ -5,8 +5,10 @@ import org.github.mlb.auth.template.GithubAuthorize;
 import org.github.mlb.auth.user.entity.UserEntity;
 import org.github.mlb.auth.user.service.UserService;
 import org.github.mlb.common.model.UserInfo;
+import org.github.mlb.common.utils.JwtUtil;
 import org.github.mlb.common.utils.Result;
 import lombok.AllArgsConstructor;
+import org.github.mlb.content.api.ContentUserDataApi;
 import org.redisson.api.RedissonClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,6 +34,8 @@ public class AuthorizeController {
     private final UserService userService;
     private final GithubAuthorize githubAuthorize;
     private final JwtProvider jwtProvider;
+
+    private final ContentUserDataApi contentUserDataApi;
 
     @GetMapping("/authorize")
     public void authorize(HttpServletResponse response) throws IOException {
@@ -56,13 +59,36 @@ public class AuthorizeController {
         userInfo.setId(userEntity.getId());
         userInfo.setStatus(userEntity.getStatus());
 
-        String token = jwtProvider.generateToken().substring(7);
+        String authorizeToken = jwtProvider.generateToken();
+        String token = authorizeToken.substring(JwtUtil.TOKEN_PREFIX.length());
         String msg = redissonClient.<String>getBucket("auth:" + userEntity.getId()).getAndSet(token, jwtProvider.getProperties().getExpirationSecond(), TimeUnit.SECONDS);
         if (msg != null) {
+            // 删除旧的token
             redissonClient.getBucket("auth:userInfo:" + msg).delete();
         }
+
+        setUserInfo(userInfo, authorizeToken);
         redissonClient.getBucket("auth:userInfo:" + token).set(userInfo, jwtProvider.getProperties().getExpirationSecond(), TimeUnit.SECONDS);
-        return Result.ofSuccess(token);
+        return Result.ofSuccess(authorizeToken);
     }
 
+    private void setUserInfo(UserInfo userInfo, String authorizeToken) {
+        // 仓库
+        Result<List<Long>> repositoryResult = contentUserDataApi.listRepositoryByUserId(userInfo.getId(), authorizeToken);
+        if (repositoryResult.isSuccess()) {
+            userInfo.setRepositories(new HashSet<>(repositoryResult.getData()));
+        }
+
+        // 分类
+        Result<List<Long>> categoryResult = contentUserDataApi.listCategoryByUserId(userInfo.getId(), authorizeToken);
+        if (categoryResult.isSuccess()) {
+            userInfo.setCategories(new HashSet<>(categoryResult.getData()));
+        }
+
+        // 博文
+        Result<List<Long>> articleResult = contentUserDataApi.listArticleByUserId(userInfo.getId(), authorizeToken);
+        if (articleResult.isSuccess()) {
+            userInfo.setArticles(new HashSet<>(articleResult.getData()));
+        }
+    }
 }

@@ -1,8 +1,10 @@
 package org.github.mlb.content.biz.article.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.github.mlb.content.api.article.entity.ArticleEntity;
+import org.github.mlb.content.article.entity.ArticleEntity;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -11,4 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<ArticleEntity> {
+    List<Long> selectListIdByUserId(Long userId);
 }

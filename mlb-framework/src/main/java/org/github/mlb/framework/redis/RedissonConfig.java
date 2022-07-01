@@ -22,14 +22,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedissonConfig {
 
-    private final RedisProperties redisProperties;
-
-    public RedissonConfig(RedisProperties redisProperties) {
-        this.redisProperties = redisProperties;
-    }
-
     @Bean
-    public RedissonClient redissonClient() {
+    public RedissonClient redissonClient(RedisProperties redisProperties) {
 
         Config config = new Config();
         config.setTransportMode(TransportMode.NIO);

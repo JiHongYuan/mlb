@@ -1,14 +1,14 @@
 package org.github.mlb.content.controller.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.github.mlb.content.api.repository.entity.RepositoryEntity;
-import org.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
-import org.github.mlb.content.api.repository.param.QueryRepositoryParam;
 import org.github.mlb.content.biz.repository.service.RepositoryService;
 import org.github.mlb.common.utils.AddOperate;
 import org.github.mlb.common.utils.ModifyOperate;
 import org.github.mlb.common.utils.Result;
 import lombok.AllArgsConstructor;
+import org.github.mlb.content.repository.entity.RepositoryEntity;
+import org.github.mlb.content.repository.param.AddOrModifyRepositoryParam;
+import org.github.mlb.content.repository.param.QueryRepositoryParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

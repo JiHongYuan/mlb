@@ -2,9 +2,11 @@ package org.github.mlb.content.biz.repository.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.github.mlb.content.api.repository.entity.RepositoryEntity;
-import org.github.mlb.content.api.repository.param.AddOrModifyRepositoryParam;
-import org.github.mlb.content.api.repository.param.QueryRepositoryParam;
+import org.github.mlb.content.repository.entity.RepositoryEntity;
+import org.github.mlb.content.repository.param.AddOrModifyRepositoryParam;
+import org.github.mlb.content.repository.param.QueryRepositoryParam;
+
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -23,10 +25,20 @@ public interface RepositoryService {
     /**
      * 查询分页
      *
+     * @param page  分页入参
      * @param param 入参
      * @return list
      */
     Page<RepositoryEntity> pageByParam(IPage<?> page, QueryRepositoryParam param);
+
+
+    /**
+     * list repository id by {@code userId}
+     *
+     * @param userId 用户ID
+     * @return ids
+     */
+    List<Long> listIdByUserId(Long userId);
 
     /**
      * add repository

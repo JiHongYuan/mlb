@@ -3,10 +3,10 @@ package org.github.mlb.content.controller.category;
 import org.github.mlb.common.utils.AddOperate;
 import org.github.mlb.common.utils.ModifyOperate;
 import org.github.mlb.common.utils.Result;
-import org.github.mlb.content.api.category.entity.CategoryEntity;
-import org.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
 import org.github.mlb.content.biz.category.service.CategoryService;
 import lombok.AllArgsConstructor;
+import org.github.mlb.content.category.entity.CategoryEntity;
+import org.github.mlb.content.category.param.AddOrModifyCategoryParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -3,7 +3,7 @@ package org.github.mlb.content.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import org.github.mlb.framework.filter.AuthorizeFilter;
+import org.github.mlb.framework.authorize.AuthorizeFilter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -20,7 +20,6 @@ import javax.servlet.Filter;
 @MapperScan(basePackages = {"org.github.mlb.content.biz.**.mapper"})
 public class MlbContentConfig {
 
-
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
@@ -34,6 +33,12 @@ public class MlbContentConfig {
         bean.setFilter(new AuthorizeFilter(redissonClient));
         bean.addUrlPatterns("/*");
         return bean;
+    }
+
+    @Bean
+    public MybatisInterceptor mybatisInterceptor() {
+        MybatisInterceptor interceptor = new MybatisInterceptor();
+        return interceptor;
     }
 
 }

@@ -4,15 +4,18 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.github.mlb.common.utils.UserInfoHolder;
-import org.github.mlb.content.api.repository.param.QueryRepositoryParam;
-import org.github.mlb.content.biz.api.RepositoryServiceApi;
+import org.github.mlb.common.model.UserInfo;
+import org.github.mlb.common.utils.JwtUtil;
+import org.github.mlb.common.utils.UserHolder;
+import org.github.mlb.content.repository.param.QueryRepositoryParam;
 import org.github.mlb.content.biz.repository.mapper.RepositoryMapper;
-import org.github.mlb.content.api.repository.entity.RepositoryEntity;
+import org.github.mlb.content.repository.entity.RepositoryEntity;
 import lombok.AllArgsConstructor;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author JiHongYuan
@@ -22,7 +25,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryEntity> {
     private final RepositoryMapper repositoryMapper;
-    private final RepositoryServiceApi repositoryServiceApi;
+    private final RedissonClient redissonClient;
 
     /**
      * 查询 {@code repositoryId}
@@ -42,8 +45,12 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
         return repositoryMapper.selectBySlug(slug);
     }
 
-    public Page<RepositoryEntity> selectPageByParam(IPage<?> page, QueryRepositoryParam param){
-       return repositoryMapper.selectPageByParam( page,  param);
+    public Page<RepositoryEntity> selectPageByParam(IPage<?> page, QueryRepositoryParam param) {
+        return repositoryMapper.selectPageByParam(page, param);
+    }
+
+    public List<Long> selectListIdByUserId(Long userId) {
+        return repositoryMapper.selectListIdByUserId(userId);
     }
 
     /**
@@ -53,6 +60,7 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
      */
     public void deleteRepositoryById(Long repositoryId) {
         repositoryMapper.deleteById(repositoryId);
+        UserHolder.get().getRepositories().remove(repositoryId);
     }
 
     /**
@@ -70,14 +78,8 @@ public class RepositoryManager extends ServiceImpl<RepositoryMapper, RepositoryE
     }
 
     public RepositoryEntity add(RepositoryEntity repository) {
-        Long userId = UserInfoHolder.getId();
-
-        repository.setCreateAt(new Date());
-        repository.setCreateBy(userId);
-        repository.setUpdateAt(new Date());
-        repository.setUpdateBy(userId);
-        repository.setIsDeleted(false);
         super.save(repository);
+        UserHolder.get().getRepositories().add(repository.getId());
         return repository;
     }
 

@@ -2,7 +2,7 @@ package org.github.mlb.content.biz.article.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.github.mlb.content.api.article.entity.ArticleVersionEntity;
+import org.github.mlb.content.article.entity.ArticleVersionEntity;
 import org.github.mlb.content.biz.article.mapper.ArticleVersionMapper;
 import org.github.mlb.content.biz.article.service.ArticleVersionService;
 import org.springframework.stereotype.Service;

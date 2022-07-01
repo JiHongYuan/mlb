@@ -1,7 +1,7 @@
 package org.github.mlb.content.biz.article.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.github.mlb.content.api.article.entity.ArticleVersionEntity;
+import org.github.mlb.content.article.entity.ArticleVersionEntity;
 
 import java.util.Date;
 

@@ -1,6 +1,7 @@
 package org.github.mlb.content.biz.repository.service;
 
-import org.github.mlb.content.api.repository.entity.RepositoryEntity;
+import org.github.mlb.content.biz.repository.mapper.RepositoryMapper;
+import org.github.mlb.content.repository.entity.RepositoryEntity;
 import org.github.mlb.content.biz.repository.manager.RepositoryManager;
 import org.github.mlb.content.biz.repository.service.impl.RepositoryServiceImpl;
 import org.junit.Assert;
@@ -21,6 +22,8 @@ public class RepositoryServiceTest {
     @Mock
     public RepositoryManager repositoryManager;
 
+    @Mock
+    public RepositoryMapper repositoryMapper;
     public RepositoryService repositoryService;
 
     @Test
@@ -48,6 +51,6 @@ public class RepositoryServiceTest {
                 .doReturn(true)
                 .when(repositoryManager)
                 .existSlugByUserId(1L, 1L, "t2");
-        repositoryService = new RepositoryServiceImpl(repositoryManager);
+        repositoryService = new RepositoryServiceImpl(repositoryManager, repositoryMapper);
     }
 }

@@ -3,6 +3,7 @@ package org.github.mlb.common.model;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Set;
 
 /**
  * TODO
@@ -47,5 +48,20 @@ public class UserInfo {
      * 创建时间
      */
     private Date currentAt;
+
+    /**
+     * 仓库ID
+     */
+    private Set<Long> repositories;
+
+    /**
+     * 分类ID
+     */
+    private Set<Long> categories;
+
+    /**
+     * 文章ID
+     */
+    private Set<Long> articles;
 
 }

@@ -1,7 +1,7 @@
 package org.github.mlb.content.biz.article.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.github.mlb.content.api.article.entity.ArticleVersionEntity;
+import org.github.mlb.content.article.entity.ArticleVersionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

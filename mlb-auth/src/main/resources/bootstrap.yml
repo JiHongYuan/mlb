@@ -1,0 +1,19 @@
+
+spring:
+  application:
+    name: mlb-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        extension-configs:
+          - data-id: oauth-config-dev.yaml
+            refresh: true
+          - data-id: redis-config-dev.yaml
+            refresh: true
+          - data-id: auth-mysql-dev.yaml
+            refresh: true
+          - data-id: jwt-config-dev.yaml
+            refresh: true

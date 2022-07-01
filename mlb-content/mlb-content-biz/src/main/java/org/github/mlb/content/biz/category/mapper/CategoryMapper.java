@@ -1,7 +1,7 @@
 package org.github.mlb.content.biz.category.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.github.mlb.content.api.category.entity.CategoryEntity;
+import org.github.mlb.content.category.entity.CategoryEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +22,7 @@ public interface CategoryMapper extends BaseMapper<CategoryEntity> {
      * @return list
      */
     List<CategoryEntity> selectListByIdOrSlug(@Param("repositoryId") Long repositoryId, @Param("repositorySlug") String repositorySlug);
+
+    List<Long> selectListIdByUserId(Long userId);
 
 }

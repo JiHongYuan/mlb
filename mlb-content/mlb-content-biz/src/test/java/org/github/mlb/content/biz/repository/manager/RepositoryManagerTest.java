@@ -1,6 +1,6 @@
 package org.github.mlb.content.biz.repository.manager;
 
-import org.github.mlb.content.api.repository.entity.RepositoryEntity;
+import org.github.mlb.content.repository.entity.RepositoryEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

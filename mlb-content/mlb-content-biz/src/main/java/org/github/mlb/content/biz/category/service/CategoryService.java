@@ -1,7 +1,7 @@
 package org.github.mlb.content.biz.category.service;
 
-import org.github.mlb.content.api.category.entity.CategoryEntity;
-import org.github.mlb.content.api.category.param.AddOrModifyCategoryParam;
+import org.github.mlb.content.category.entity.CategoryEntity;
+import org.github.mlb.content.category.param.AddOrModifyCategoryParam;
 
 import java.util.List;
 
@@ -26,6 +26,8 @@ public interface CategoryService {
      * @return list
      */
     List<CategoryEntity> listByRepositorySlug(String repositorySlug);
+
+    List<Long> listIdByUserId(Long userId);
 
     /**
      * add category
